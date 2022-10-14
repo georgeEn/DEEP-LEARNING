@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pnml xmlns="http://www.informatik.hu-berlin.de/top/pnml/ptNetb">
+  <net active="true" id="COFFEE_MACHINE" type="P/T net">
+    <place displayName="true" id="Start" initialMarking="1" invariant="&lt; inf" name="Start" nameOffsetX="0" nameOffsetY="0" positionX="60" positionY="75"/>
+    <place displayName="true" id="Receives_coin" initialMarking="0" invariant="&lt; inf" name="Receives_coin" nameOffsetX="22" nameOffsetY="0" positionX="360" positionY="45"/>
+    <place displayName="true" id="Select_Coffee" initialMarking="0" invariant="&lt; inf" name="Select_Coffee" nameOffsetX="39" nameOffsetY="1" positionX="705" positionY="105"/>
+    <place displayName="true" id="Dispense_Coffee" initialMarking="0" invariant="&lt; inf" name="Dispense_Coffee" nameOffsetX="41" nameOffsetY="1" positionX="330" positionY="285"/>
+    <transition angle="0" displayName="true" id="Insert_Coin" infiniteServer="false" name="Insert_Coin" nameOffsetX="33" nameOffsetY="-1" player="0" positionX="180" positionY="45" priority="0" urgent="false"/>
+    <transition angle="0" displayName="true" id="Input_Coffee_N0" infiniteServer="false" name="Input_Coffee_N0" nameOffsetX="40" nameOffsetY="-7" player="0" positionX="510" positionY="30" priority="0" urgent="false"/>
+    <transition angle="0" displayName="true" id="Wait" infiniteServer="false" name="Wait" nameOffsetX="16" nameOffsetY="-2" player="0" positionX="750" positionY="270" priority="0" urgent="false"/>
+    <transition angle="0" displayName="true" id="Reset" infiniteServer="false" name="Reset" nameOffsetX="0" nameOffsetY="-1" player="0" positionX="60" positionY="285" priority="0" urgent="false"/>
+    <arc id="A0" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Start" target="Insert_Coin" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="89" yCoord="86"/>
+      <arcpath arcPointType="false" id="1" xCoord="189" yCoord="65"/>
+    </arc>
+    <arc id="A1" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Insert_Coin" target="Receives_coin" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="199" yCoord="60"/>
+      <arcpath arcPointType="false" id="1" xCoord="360" yCoord="60"/>
+    </arc>
+    <arc id="A2" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Receives_coin" target="Input_Coffee_N0" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="389" yCoord="58"/>
+      <arcpath arcPointType="false" id="1" xCoord="519" yCoord="50"/>
+    </arc>
+    <arc id="A3" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Input_Coffee_N0" target="Select_Coffee" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="529" yCoord="45"/>
+      <arcpath arcPointType="false" id="1" xCoord="706" yCoord="114"/>
+    </arc>
+    <arc id="A4" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Select_Coffee" target="Wait" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="724" yCoord="134"/>
+      <arcpath arcPointType="false" id="1" xCoord="765" yCoord="270"/>
+    </arc>
+    <arc id="A5" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Wait" target="Dispense_Coffee" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="759" yCoord="290"/>
+      <arcpath arcPointType="false" id="1" xCoord="630" yCoord="264"/>
+      <arcpath arcPointType="false" id="2" xCoord="359" yCoord="298"/>
+    </arc>
+    <arc id="A6" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Dispense_Coffee" target="Reset" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="330" yCoord="299"/>
+      <arcpath arcPointType="false" id="1" xCoord="80" yCoord="295"/>
+    </arc>
+    <arc id="A7" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Reset" target="Start" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="75" yCoord="285"/>
+      <arcpath arcPointType="false" id="1" xCoord="75" yCoord="105"/>
+    </arc>
+  </net>
+  <query active="true" algorithmOption="CERTAIN_ZERO" approximationDenominator="0" capacity="4" discreteInclusion="false" enableOverApproximation="false" enableUnderApproximation="false" extrapolationOption="null" gcd="false" hashTableSize="null" inclusionPlaces="*NONE*" name="NO DEADLOCK" overApproximation="false" pTrie="false" reduction="true" reductionOption="VerifyPN" searchOption="HEURISTIC" symmetry="false" timeDarts="false" traceOption="NONE" type="CTL" useQueryReduction="true" useSiphonTrapAnalysis="false" useStubbornReduction="true" useTarOption="false" useTarjan="true">
+    <formula>
+            
+      <all-paths>
+                
+        <globally>
+                    
+          <negation>
+                        
+            <deadlock/>
+                      
+          </negation>
+                  
+        </globally>
+              
+      </all-paths>
+          
+    </formula>
+  </query>
+  <k-bound bound="3"/>
+  <feature isGame="false" isTimed="false"/>
+</pnml>
