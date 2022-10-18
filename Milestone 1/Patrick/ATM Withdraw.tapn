@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pnml xmlns="http://www.informatik.hu-berlin.de/top/pnml/ptNetb">
+  <net active="true" id="COFFEE_MACHINE" type="P/T net">
+    <place displayName="true" id="Start" initialMarking="1" invariant="&lt; inf" name="Start" nameOffsetX="0" nameOffsetY="0" positionX="60" positionY="75"/>
+    <place displayName="true" id="Operation_chosen" initialMarking="0" invariant="&lt; inf" name="Operation_chosen" nameOffsetX="22" nameOffsetY="0" positionX="360" positionY="45"/>
+    <place displayName="true" id="Amount_entered" initialMarking="0" invariant="&lt; inf" name="Amount_entered" nameOffsetX="39" nameOffsetY="1" positionX="705" positionY="105"/>
+    <place displayName="true" id="Withdraw_money" initialMarking="0" invariant="&lt; inf" name="Withdraw_money" nameOffsetX="41" nameOffsetY="1" positionX="345" positionY="300"/>
+    <place displayName="true" id="Insufficient_balance" initialMarking="0" invariant="&lt; inf" name="Insufficient_balance" nameOffsetX="0" nameOffsetY="0" positionX="330" positionY="165"/>
+    <transition angle="0" displayName="true" id="Select_operation" infiniteServer="false" name="Select_operation" nameOffsetX="33" nameOffsetY="-1" player="0" positionX="180" positionY="45" priority="0" urgent="false"/>
+    <transition angle="0" displayName="true" id="Enter_amount" infiniteServer="false" name="Enter_amount" nameOffsetX="40" nameOffsetY="-7" player="0" positionX="510" positionY="30" priority="0" urgent="false"/>
+    <transition angle="0" displayName="true" id="Wait" infiniteServer="false" name="Wait" nameOffsetX="16" nameOffsetY="-2" player="0" positionX="570" positionY="210" priority="0" urgent="false"/>
+    <transition angle="0" displayName="true" id="Reset" infiniteServer="false" name="Reset" nameOffsetX="0" nameOffsetY="-1" player="0" positionX="60" positionY="210" priority="0" urgent="false"/>
+    <arc id="A0" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Start" target="Select_operation" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="89" yCoord="86"/>
+      <arcpath arcPointType="false" id="1" xCoord="189" yCoord="60"/>
+    </arc>
+    <arc id="A1" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Select_operation" target="Operation_chosen" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="199" yCoord="60"/>
+      <arcpath arcPointType="false" id="1" xCoord="360" yCoord="60"/>
+    </arc>
+    <arc id="A2" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Operation_chosen" target="Enter_amount" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="389" yCoord="58"/>
+      <arcpath arcPointType="false" id="1" xCoord="519" yCoord="45"/>
+    </arc>
+    <arc id="A3" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Enter_amount" target="Amount_entered" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="529" yCoord="45"/>
+      <arcpath arcPointType="false" id="1" xCoord="706" yCoord="114"/>
+    </arc>
+    <arc id="A4" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Amount_entered" target="Wait" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="708" yCoord="129"/>
+      <arcpath arcPointType="false" id="1" xCoord="589" yCoord="225"/>
+    </arc>
+    <arc id="A6" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Withdraw_money" target="Reset" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="345" yCoord="310"/>
+      <arcpath arcPointType="false" id="1" xCoord="79" yCoord="231"/>
+    </arc>
+    <arc id="A7" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Reset" target="Start" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="75" yCoord="210"/>
+      <arcpath arcPointType="false" id="1" xCoord="75" yCoord="105"/>
+    </arc>
+    <arc id="A8" inscription="[0,inf)" nameOffsetX="0" nameOffsetY="0" source="Insufficient_balance" target="Reset" type="timed" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="330" yCoord="182"/>
+      <arcpath arcPointType="false" id="1" xCoord="80" yCoord="224"/>
+    </arc>
+    <arc id="A9" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Wait" target="Insufficient_balance" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="579" yCoord="225"/>
+      <arcpath arcPointType="false" id="1" xCoord="359" yCoord="182"/>
+    </arc>
+    <arc id="A10" inscription="1" nameOffsetX="0" nameOffsetY="0" source="Wait" target="Withdraw_money" type="normal" weight="1">
+      <arcpath arcPointType="false" id="0" xCoord="579" yCoord="225"/>
+      <arcpath arcPointType="false" id="1" xCoord="373" yCoord="309"/>
+    </arc>
+  </net>
+  <query active="true" algorithmOption="CERTAIN_ZERO" approximationDenominator="0" capacity="4" discreteInclusion="false" enableOverApproximation="false" enableUnderApproximation="false" extrapolationOption="AUTOMATIC" gcd="false" hashTableSize="MB_16" inclusionPlaces="*NONE*" name="NO DEADLOCK" overApproximation="false" pTrie="false" reduction="true" reductionOption="VerifyPN" searchOption="HEURISTIC" symmetry="false" timeDarts="false" traceOption="NONE" type="CTL" useQueryReduction="true" useSiphonTrapAnalysis="false" useStubbornReduction="true" useTarOption="false" useTarjan="true">
+    <formula>
+            
+      <all-paths>
+                
+        <globally>
+                    
+          <negation>
+                        
+            <deadlock/>
+                      
+          </negation>
+                  
+        </globally>
+              
+      </all-paths>
+          
+    </formula>
+  </query>
+  <k-bound bound="3"/>
+  <feature isGame="false" isTimed="false"/>
+</pnml>
